@@ -432,12 +432,7 @@ export interface Project {
   category: string;
   github: string;
   webapp: string;
-  member?: {
-    name: string;
-    img: string;
-    linkedin: string;
-    github: string;
-  }[];
+  
 }
 
 export const projects: Project[] = [

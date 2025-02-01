@@ -31,7 +31,7 @@ interface Project {
   category: string;
   github: string;
   webapp: string;
-  member?: Array<{ img: string }>;
+  
 }
 
 // Define the OpenModal type
