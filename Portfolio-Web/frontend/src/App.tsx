@@ -75,7 +75,7 @@ const App: React.FC = () => {
   });
 
   return (
-    <Router basename="/Portfolio-Web">
+    <Router basename="/">
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <Navbar />
         <Body $theme={darkMode ? darkTheme : lightTheme}>
