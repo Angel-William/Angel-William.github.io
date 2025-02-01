@@ -9,7 +9,8 @@ export default defineConfig({
     outDir: 'build',   
     rollupOptions: {
       output: {
-        format: 'es', // Ensure the output format is ES module
+        format: 'iife', // Use IIFE instead of ES module
+        name: 'App', // Ensure the output format is ES module
       },
     },
   },
