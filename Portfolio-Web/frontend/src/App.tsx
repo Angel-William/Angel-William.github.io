@@ -75,8 +75,8 @@ const App: React.FC = () => {
   });
 
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Router>
+    <Router basename="/Portfolio-Web">
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <Navbar />
         <Body $theme={darkMode ? darkTheme : lightTheme}>
           {/* Render the starry background */}
@@ -107,8 +107,8 @@ const App: React.FC = () => {
             <Footer key="footer" />
           </AnimatePresence>
         </Body>
-      </Router>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Router>
   );
 };
 
