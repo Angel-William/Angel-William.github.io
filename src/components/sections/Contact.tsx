@@ -1,16 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Snackbar, Alert } from '@mui/material';
 
-// Define the theme interface for type safety
-interface Theme {
-  text_primary: string;
-  text_secondary: string;
-  card: string;
-  primary: string;
-}
-
-// Styled components with TypeScript
+// Styled components
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,7 +30,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Title = styled.div<{ theme: Theme }>`
+const Title = styled.div`
   font-size: 42px;
   text-align: center;
   font-weight: 600;
@@ -50,7 +42,7 @@ const Title = styled.div<{ theme: Theme }>`
   }
 `;
 
-const Desc = styled.div<{ theme: Theme }>`
+const Desc = styled.div`
   font-size: 18px;
   text-align: center;
   max-width: 600px;
@@ -61,7 +53,7 @@ const Desc = styled.div<{ theme: Theme }>`
   }
 `;
 
-const ContactButton = styled.a<{ theme: Theme }>`
+const ContactButton = styled.a`
   width: 95%;
   max-width: 600px;
   text-decoration: none;
@@ -82,8 +74,8 @@ const ContactButton = styled.a<{ theme: Theme }>`
   }
 `;
 
-const Contact: React.FC = () => {
-  const [open, setOpen] = React.useState(false); // Manage Snackbar state
+const Contact = () => {
+  const [open, setOpen] = useState(false); // Manage Snackbar state
 
   const handleEmailClick = () => {
     window.location.href = 'mailto:eng.angelawilliam@gmail.com?subject=New%20Message&body=';
