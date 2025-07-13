@@ -59,8 +59,7 @@ const Education: React.FC = () => {
       <Wrapper>
         <Title>Education</Title>
         <Desc style={{ marginBottom: "40px" }}>
-          My education has been a journey of self-discovery and growth. My
-          educational details are as follows.
+        My education has been a journey of personal evolution and purposeful learning, shaping my skills and perspective. Below are the key details of my academic path.
         </Desc>
 
         <VerticalTimeline>

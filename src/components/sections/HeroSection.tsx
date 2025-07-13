@@ -1,5 +1,6 @@
 import React from 'react';
 import HeroBgAnimation from './HeroBgAnimation';
+import StyledStarsCanvas from '../canvas/Stars';
 import {
   HeroContainer,
   HeroBg,
@@ -21,6 +22,7 @@ const HeroSection: React.FC = () => {
   return (
     <div id="about">
       <HeroContainer>
+      <StyledStarsCanvas />
         <HeroBg>
           <HeroBgAnimation />
         </HeroBg>

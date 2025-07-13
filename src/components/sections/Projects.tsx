@@ -118,7 +118,7 @@ const Projects: React.FC<Props> = ({ openModal, setOpenModal }) => {
       <Wrapper>
         <Title>Projects</Title>
         <Desc style={{ marginBottom: "40px" }}>
-          I have worked on a wide range of projects. From web apps to android apps. Here are some of my projects.
+          I have worked on a wide range of projects from software development to data science , Here are some of my projects.
         </Desc>
         <ToggleButtonGroup>
           <ToggleButton $active={toggle === "machine learning"} onClick={() => setToggle("machine learning")}>
@@ -126,11 +126,15 @@ const Projects: React.FC<Props> = ({ openModal, setOpenModal }) => {
           </ToggleButton>
           <Divider />
           <ToggleButton $active={toggle === "web app"} onClick={() => setToggle("web app")}>
-            WEB APP"S
+            WEB APP'S
           </ToggleButton>
           <Divider />
           <ToggleButton $active={toggle === "android app"} onClick={() => setToggle("android app")}>
             ANDROID APP'S
+          </ToggleButton>
+          <Divider />
+          <ToggleButton $active={toggle === "data projects"} onClick={() => setToggle("data projects")}>
+            DATA PROJECTS
           </ToggleButton>
         </ToggleButtonGroup>
         <CardContainer>

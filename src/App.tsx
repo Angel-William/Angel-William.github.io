@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme } from './utils/Themes';
+import { darkTheme } from './utils/Themes';
 import Navbar from './components/Navbar';
 import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -31,7 +31,7 @@ interface Project {
   category: string;
   github: string;
   webapp: string;
-  
+  member?: Array<{ img: string }>;
 }
 
 // Define the OpenModal type
@@ -75,10 +75,10 @@ const App: React.FC = () => {
   });
 
   return (
-    <Router basename="/">
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+    <ThemeProvider theme={darkMode ? darkTheme: darkTheme}>
+      <Router>
         <Navbar />
-        <Body $theme={darkMode ? darkTheme : lightTheme}>
+        <Body $theme={darkMode ? darkTheme: darkTheme}>
           {/* Render the starry background */}
           <StyledStarsCanvas />
           <AnimatePresence>
@@ -107,8 +107,8 @@ const App: React.FC = () => {
             <Footer key="footer" />
           </AnimatePresence>
         </Body>
-      </ThemeProvider>
-    </Router>
+      </Router>
+    </ThemeProvider>
   );
 };
 

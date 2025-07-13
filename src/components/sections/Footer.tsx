@@ -98,11 +98,14 @@ const Footer: React.FC = () => {
         <Logo>Angela William Mussa</Logo>
         <Nav>
           <NavLink href="#about">About</NavLink>
-          <NavLink href="#skills">Skills</NavLink>
-          <NavLink href="#experience">Experience</NavLink>
-          <NavLink href="#projects">Projects</NavLink>
-          <NavLink href="#education">Education</NavLink>
+          <NavLink href="#Skills">Skills</NavLink>
+          <NavLink href="#Experience">Experience</NavLink>
+          <NavLink href="#Projects">Projects</NavLink>
+          <NavLink href="#Education">Education</NavLink>
         </Nav>
+        
+       
+        
         <SocialMediaIcons>
           <SocialMediaIcon href={Bio.github} target="_blank" rel="noopener noreferrer">
             <FaGithub  />
@@ -118,7 +121,7 @@ const Footer: React.FC = () => {
           </SocialMediaIcon>
         </SocialMediaIcons>
         <Copyright>
-          &copy; 2024 Angela William Mussa. All rights reserved.
+          &copy; 2025 Angela William Mussa. All rights reserved.
         </Copyright>
       </FooterWrapper>
     </FooterContainer>
