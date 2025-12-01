@@ -95,13 +95,14 @@ const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <FooterWrapper>
-        <Logo>Angela William Mussa</Logo>
+        <Logo>Angela William</Logo>
         <Nav>
           <NavLink href="#about">About</NavLink>
           <NavLink href="#Skills">Skills</NavLink>
           <NavLink href="#Experience">Experience</NavLink>
           <NavLink href="#Projects">Projects</NavLink>
           <NavLink href="#Education">Education</NavLink>
+          <NavLink href="#Certifications">Certificates</NavLink>
         </Nav>
         
        
@@ -121,7 +122,7 @@ const Footer: React.FC = () => {
           </SocialMediaIcon>
         </SocialMediaIcons>
         <Copyright>
-          &copy; 2025 Angela William Mussa. All rights reserved.
+          &copy; 2025 Angela William. All rights reserved.
         </Copyright>
       </FooterWrapper>
     </FooterContainer>

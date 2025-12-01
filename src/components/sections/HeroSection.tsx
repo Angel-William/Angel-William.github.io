@@ -13,6 +13,7 @@ import {
   Span,
   SubTitle,
   ResumeButton,
+  ButtonsRow, // <-- import new wrapper
 } from './HeroStyle';
 import HeroImg from '/HeroImage.jpg';
 import Typewriter from 'typewriter-effect';
@@ -44,9 +45,22 @@ const HeroSection: React.FC = () => {
               </Span>
             </TextLoop>
             <SubTitle>{Bio.description}</SubTitle>
-            <ResumeButton href={Bio.resume} target="_blank" rel="noopener noreferrer">
-              Check Resume
-            </ResumeButton>
+            <ButtonsRow>
+              <ResumeButton href={Bio.resume} target="_blank" rel="noopener noreferrer">
+                Check Resume
+              </ResumeButton>
+              <ResumeButton
+                href={Bio.Certifications} target="_blank" rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById('certifications');
+                  el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                aria-label="Scroll to Certifications"
+              >
+                Check Certifications
+              </ResumeButton>
+            </ButtonsRow>
           </HeroLeftContainer>
 
           <HeroRightContainer id="Right">

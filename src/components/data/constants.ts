@@ -4,6 +4,7 @@ export interface Bio {
   description: string;
   github: string;
   resume: string;
+  Certifications: string;
   linkedin: string;
   twitter: string;
   insta: string;
@@ -11,12 +12,11 @@ export interface Bio {
 }
 
 export const Bio: Bio = {
-  name: "Angela William Mussa",
+  name: "Angela William",
   roles: [
-    "Software Engineer",
-    "Data Analyst",
+    "Software Developer",
+    "Data Engineer",
     "Systems Administrator",
-    "UI/UX Designer",
   ],
   description:
   "I am a relentlessly driven and adaptable professional, fueled by an insatiable curiosity and a passion for innovation. Thriving in dynamic environments, I excel at tackling complex challenges with creativity and precision. My commitment to continuous growth and mastery empowers me to deliver exceptional, high-impact results that exceed expectations.",
@@ -26,8 +26,54 @@ export const Bio: Bio = {
   linkedin: "https://www.linkedin.com/in/angela-william-859682331/",
   twitter: "https://x.com/heartonguitar",
   insta: "https://www.instagram.com/codegallaxy/",
-  facebook: "https://www.facebook.com/codegallaxy//",
+  facebook: "https://www.facebook.com/codegallaxy/",
 };
+// types/certificate.ts
+export interface Certifications {
+  id: number;
+  title: string;
+  issuer: string;
+  date: string;
+  duration: string;
+  skills: string[];
+  certificateId: string;
+  instructor: string;
+  pdfUrl: string;
+  thumbnailColor: string;
+}
+
+export interface CertificationsProps {
+  className?: string;
+  certificates?: Certifications[];
+}
+// Your certificate data
+const Certifications: Certifications[] = [
+  {
+    id: 1,
+    title: "Career Essentials in System Administration",
+    issuer: "Microsoft",
+    date: "Nov 30, 2025",
+    duration: "1 hour 19 minutes",
+    skills: ["System Administration", "Network Administration", "Network Security"],
+    certificateId: "8d5f6f9e4b8b2f78e4c8da4357b055b131xf36de1294c55e8b54f20cba377d24b",
+    instructor: "Shea Hanson, Head of Learning Content Strategy",
+    pdfUrl: "docs/CertificateOfCompletion_Career Essentials in System Administration.pdf",
+    thumbnailColor: "from-blue-50 to-indigo-100"
+  },
+  {
+    id: 2,
+    title: "Practical GitHub Project Management and Collaboration",
+    issuer: "LinkedIn Learning",
+    date: "Nov 30, 2025",
+    duration: "1 hour 19 minutes",
+    skills: ["GitHub", "Project Management"],
+    certificateId: "cfb4829407708bf36856d11d6552e1a0f6f4ece18e6c187d6f249a1b0dd43fb6",
+    instructor: "Shea Hanson, Head of Learning Content Strategy",
+    pdfUrl: "/certificates/CertificateOfCompletion_Practical GitHub Project Management and Collaboration (1).pdf",
+    thumbnailColor: "from-emerald-50 to-teal-100"
+  },
+  // Add more certificates as needed
+];
 
 export interface Skill {
   name: string;
@@ -126,41 +172,41 @@ export const skills: SkillCategory[] = [
       },
     ],
   },
-  {
-    title: "Data Analyst",
-    skills: [
-     
-      {
-        name: "R",
-        image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/r/r-original.svg"
-      },
-      {
-        name: "Pandas",
-        image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg"
-      },
-      {
-        "name": "Matplotlib",
-        "image": "https://matplotlib.org/stable/_images/sphx_glr_logos2_001.png"
-      },
-      {
-        name: "NumPy",
-        image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg"
-      },
-      {
-        name: "Tableau",
-        image: "https://cdn.worldvectorlogo.com/logos/tableau-logo.svg"
-      },
-      {
-        name: "Power BI",
-        image: "https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg"
-      },
-      {
-        name: "Excel",
-        image: "https://upload.wikimedia.org/wikipedia/commons/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg"
-      },
-      
-    ]
-  },
+ 
+{
+  "title": "Data Engineer",
+  "skills": [
+    {
+      "name": "SQL",
+      "image": "https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg"
+    },
+    {
+      "name": "Python",
+      "image": "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+    },
+    {
+      "name": "Pandas",
+      "image": "https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg"
+    },
+    {
+      "name": "Tableau",
+      "image": "https://cdn.worldvectorlogo.com/logos/tableau-logo.svg"
+    },
+    {
+      "name": "Power BI",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg"
+    },
+    {
+      "name": "Apache Spark",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg"
+    },
+    {
+      "name": "ETL",
+      "image": "https://cdn-icons-png.flaticon.com/512/2621/2621040.png"
+    }
+  ]
+},
+
  
   {
     title: "DevOps",
@@ -196,9 +242,9 @@ export const skills: SkillCategory[] = [
           "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg",
       },
       {
-        name: " Pytorch",
-        image:
-          "icons/pytorch-original-wordmark.svg"},
+        name: "PyTorch",
+        image: "icons/pytorch-original-wordmark.svg",
+      },
       {
         name: "Tenserflow",
         image:
@@ -260,11 +306,47 @@ interface Experience {
 
 export const experiences: Experience[] = [
   {
-    id: 0,
+  
+id: 0,
+img: "./images/og-mazars.png",
+role: "System Administrator",
+company: "Forvis Mazars",
+date: "2025",
+desc: "Managed Windows Server and Active Directory, handled user accounts, updates, and basic troubleshooting. Configured permissions, monitored system health, and supported IT policies to reduce downtime.",
+skills: [
+  "Windows Server",
+  "Active Directory",
+  "Group Policy",
+  "PowerShell",
+  "Backup & Restore",
+  "User Support",
+  "Remote Desktop Services",
+],
+doc: "https://github.com/angel-william/windows-admin-scripts",
+  },
+  {
+    id: 2,
+    img: "./images/souled.jpg",
+    role: "Lead Developer",
+    company: "Souled",
+    date: "2024",
+    desc: "• Built an E-commerce website for hair and skin care brand using React and Django for backend",
+    skills: [
+      "React",
+      "JavaScript",
+      "Django",
+      "Node Js",
+      "Firebase",
+      "Figma",
+    ],
+    doc: "https://github.com/angel-william/souled",
+  },
+    {
+    id: 1,
     img: "./images/serenity.png",
     role: "Frontend Engineer Intern",
     company: "Serenity Medical Service",
-    date: "July 2022 - Sep 2022",
+    date: "2023",
     desc: "Enhanced user experiences of Serenity Medical Service by resolving bugs & reduced load time by 40%. Built Analytics portal using React Js with seamless interaction of REST APIs using AXIOS optimized with React Query. Refactored previous code to TypeScript, updated with new dependency and integrated Vite with Jest for Unit Testing.",
     skills: [
       "ReactJS",
@@ -277,49 +359,7 @@ export const experiences: Experience[] = [
     ],
     doc: "https://github.com/angel-william/serenity-frontend",
   },
-  {
-    id: 1,
-    img: "./images/souled.jpg",
-    role: "DevOps & Fullstack Engineering Intern",
-    company: "Souled",
-    date: "Jul 2023 - Oct 2023",
-    desc: "Built Frontend with ReactJS, created High level Design and Figma design. Built Backend with GraphQL and Node JS and connected with MongoDb - Reducing API calls by 20%. Dockerized and automated with Kubernetes & Jenkins CI/CD deployed in AWS-EC2 added Prometheus & Grafana for monitoring.",
-    skills: [
-      "Docker",
-      "Terraform",
-      "AWS",
-      "EC2",
-      "Portainer",
-      "Nginx",
-      "JavaScript",
-      "TypeScript",
-      "Node Js",
-      " Django",
-    ],
-    doc: "https://github.com/angel-william/souled-frontend",
-  },
-  {
-    id: 2,
-    img: "./images/souled.jpg",
-    role: "Lead Developer",
-    company: "Souled",
-    date: "June 2024 - Oct 2024",
-    desc: "• Built an E-commerce website for hair and skin care brand using React and Django for backend",
-    skills: [
-      "React",
-      "JavaScript",
-      "Django",
-      "Node Js",
-      "Firebase",
-      "Figma",
-    ],
-    doc: "https//github.com/angel-william/souled",
-  },
-  
 
- 
- 
- 
 ];
 
 

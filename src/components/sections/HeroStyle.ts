@@ -176,26 +176,47 @@ export const SubTitle = styled.div`
   }
 `;
 
+// Add a wrapper to align buttons horizontally and switch to column on small screens
+export const ButtonsRow = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 16px;
+
+  @media (max-width: 960px) {
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+`;
+
 export const ResumeButton = styled.a`
   -webkit-appearance: button;
   -moz-appearance: button;
   appearance: button;
   text-decoration: none;
-  width: 95%;
-  max-width: 300px;
-  text-align: center;
-  padding: 16px 0;
+  /* Make the buttons size nicely in a row */
+  min-width: 160px;
+  padding: 16px 24px;
   color: ${({ theme }: { theme: Theme }) => theme.white};
   border-radius: 20px;
   cursor: pointer;
   font-size: 20px;
   font-weight: 600;
   transition: all 0.2s ease-in-out !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
   background: hsla(271, 100%, 50%, 1);
   background: linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-  background: -moz-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-  background: -webkit-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
   box-shadow: 20px 20px 60px #1f2634, -20px -20px 60px #1f2634;
+
   &:hover {
     transform: scale(1.05);
     transition: all 0.4s ease-in-out;
@@ -204,6 +225,7 @@ export const ResumeButton = styled.a`
   }
 
   @media (max-width: 640px) {
+    width: 100%;
     padding: 12px 0;
     font-size: 18px;
   }

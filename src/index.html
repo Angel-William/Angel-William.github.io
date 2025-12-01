@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angela William Mussa - Certifications</title>
+<style>
+    body {
+        font-family: 'Noto Sans JP', sans-serif;
+        background-color: #f9f9f6;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        text-align: center;
+        padding: 40px 20px;
+        background: #fff;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        color: #2c2c2c;
+    }
+    header p {
+        font-size: 1.2em;
+        color: #666;
+    }
+    .roles {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+    .role {
+        background: #e8e8e8;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.9em;
+    }
+    section {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #e5e5e5;
+        padding-bottom: 5px;
+    }
+    .description {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #444;
+    }
+    .cert-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .cert-card {
+        background: #fafafa;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    .cert-card:hover {
+        transform: scale(1.03);
+    }
+    .cert-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+    }
+    .cert-title {
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 1em;
+    }
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.7);
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 90%;
+        max-height: 90%;
+        overflow: auto;
+    }
+    .modal iframe {
+        width: 100%;
+        height: 80vh;
+    }
+    .close-btn {
+        display: block;
+        text-align: right;
+        margin-bottom: 10px;
+        font-size: 1.2em;
+        cursor: pointer;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Angela William Mussa</h1>
+    <p>Driven Professional | Innovator | Problem Solver</p>
+    <div class="roles">
+        <span class="role">Software Developer</span>
+        <span class="role">Data Engineer</span>
+        <span class="role">Systems Administrator</span>
+    </div>
+</header>
+
+<section>
+    <h2>About Me</h2>
+    <p class="description">
+        I am a relentlessly driven and adaptable professional, fueled by an insatiable curiosity and a passion for innovation. Thriving in dynamic environments, I excel at tackling complex challenges with creativity and precision. My commitment to continuous growth and mastery empowers me to deliver exceptional, high-impact results that exceed expectations.
+    </p>
+</section>
+
+<section>
+    <h2>Certifications</h2>
+    <div class="cert-gallery">
+        <div class="cert-card" onclick="openModal('CertificateOfCompletion_Learning Git and GitHub.pdf')">
+            <img src="thumbnail           <div class="cert-title">Learning Git and GitHub</div>
+        </div>
+        <div class="cert-card" onclick="openModal('CertificateOfCompletion_Practical GitHub Project Management and Collaboration.pdf')">
+            <img src="thumbnailng
+            <div class="cert-title">Practical GitHub Project Management</div>
+        </div>
+        <div class="cert-card" onclick="openModal('CertificateOfCompletion_Practical GitHub Project Management and Collaboration (1).pdf')">
+            <img src="thumbnail-project        <div class="cert-title">PMI Registered GitHub Project Management</div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal" id="certModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">✖</span>
+        <iframe id="pdfFrame" src="" frameborder="0"></iframe>
+    </div>
+</div>
+
+<footer>
+    &copy; 2025 Angela William Mussa | Connect on #GitHub</a>
+</footer>
+
+<script>
+function openModal(pdfUrl) {
+    document.getElementById('pdfFrame').src = pdfUrl;
+    document.getElementById('certModal').style.display = 'flex';
+}
+function closeModal() {
+    document.getElementById('certModal').style.display = 'none';
+    document.getElementById('pdfFrame').src = '';
+}
+</script>
+</body>
+</html>
