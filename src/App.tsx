@@ -1,9 +1,11 @@
+
+// src/App.tsx
 import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme } from './utils/Themes';
 import Navbar from './components/Navbar';
 import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HeroSection from './components/sections/HeroSection';
 import Skills from './components/sections/Skills';
 import StyledStarsCanvas from './components/canvas/Stars';
@@ -13,37 +15,23 @@ import Certifications from './components/sections/Certification';
 import Contact from './components/sections/Contact';
 import Footer from './components/sections/Footer';
 import Experience from './components/sections/Experience';
+// import CertificationsPage from './components/pages/Certification'; // not needed now
 import Education from './components/sections/Education';
 import ProjectDetails from './components/sections/ProjectDetails';
-import styled from 'styled-components'; // <-- Create this file if not present
+import styled from 'styled-components';
 
-// Define the theme interface for type safety
+// ✅ Import the certifications data (adjust the path if your constants live elsewhere)
+import { certificationsData } from './components/data/constants';
+
 interface Theme {
   bg: string;
 }
 
-interface Project {
-  id: number;
-  title: string;
-  date: string;
-  description: string;
-  image: string;
-  tags: string[];
-  category: string;
-  github: string;
-  webapp: string;
-  member?: Array<{ img: string }>;
-}
-
-// Import OpenModal type from a shared file
-import { OpenModal } from './types'; // Adjust the path as necessary
-
-// Styled components with TypeScript
 const Body = styled.div<{ $theme: Theme }>`
   background-color: ${({ $theme }) => $theme.bg};
   width: 100%;
   overflow-x: hidden;
-  position: relative; // Ensure the stars canvas is positioned correctly
+  position: relative;
 `;
 
 const Wrapper = styled.div`
@@ -61,27 +49,43 @@ const Wrapper = styled.div`
   clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 98%, 0 100%);
 `;
 
+interface Project {
+  id: number;
+  title: string;
+  date: string;
+  description: string;
+  image: string;
+  tags: string[];
+  category: string;
+  github: string;
+  webapp: string;
+  member?: Array<{ img: string }>;
+}
+
+import { OpenModal } from './types';
+
 const App: React.FC = () => {
-  const [darkMode, setDarkMode] = useState(
+  const [darkMode] = useState(
     () =>
       localStorage.getItem('theme') === 'dark' ||
       window.matchMedia('(prefers-color-scheme: dark)').matches
   );
+
   const [openModal, setOpenModal] = useState<OpenModal>({
     state: false,
     project: null,
   });
-  const [activeSection, setActiveSection] = useState<'resume' | 'certifications' | null>(null);
-  
+
   return (
-    <ThemeProvider theme={darkMode ? darkTheme: darkTheme}>
+    <ThemeProvider theme={darkMode ? darkTheme : darkTheme}>
       <Router>
         <Navbar />
-        <Body $theme={darkMode ? darkTheme: darkTheme}>
-          {/* Render the starry background */}
+        <Body $theme={darkMode ? darkTheme : darkTheme}>
+          {/* Global starry background */}
           <StyledStarsCanvas />
+
           <AnimatePresence>
-            {/* Add unique keys for every component */}
+            {/* Project modal (global so it can overlay any route) */}
             {openModal.state && (
               <ProjectDetails
                 key="project-details"
@@ -89,30 +93,58 @@ const App: React.FC = () => {
                 setOpenModal={setOpenModal}
               />
             )}
-            <HeroSection key="hero-section" setActiveSection={setActiveSection} />
-            <Wrapper key="skills-wrapper">
-              <Skills key="skills" />
-              <Experience key="experience" experiences={[]} />
-            </Wrapper>
-            <Projects
-              key="projects"
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            />
-            {activeSection === 'certifications' && (
-              <Certifications certificates={certificatesData} />
-            )}
-            <Wrapper key="contact-wrapper">
-              <Education key="education" />
-             
-              <Contact key="contact" />
-            </Wrapper>
-            <Footer key="footer" />
+
+            {/* Define routes */}
+            <Routes>
+              {/* Home / Landing */}
+              <Route
+                path="/"
+                element={
+                  <>
+                    <HeroSection key="hero-section" />
+                    <Wrapper key="skills-wrapper">
+                      <Skills key="skills" />
+                      <Experience key="experience" experiences={[]} />
+                    </Wrapper>
+                    <Projects
+                      key="projects"
+                      openModal={openModal}
+                      setOpenModal={setOpenModal}
+                    />
+                    <Wrapper key="contact-wrapper">
+                      <Education key="education" />
+                      <Contact key="contact" />
+                    </Wrapper>
+                    <Footer key="footer" />
+                  </>
+                }
+              />
+
+              {/* Certifications page (opens in a new tab from the hero button) */}
+              <Route
+                path="/certifications"
+                element={
+                  <main className="min-h-screen bg-white">
+                    <div className="mx-auto max-w-6xl px-4 py-10">
+                      <h1 className="text-3xl font-bold tracking-tight mb-6">
+                        Certifications
+                      </h1>
+                      <p className="text-slate-600 mb-8">
+                        Proof of learning and accomplishments—each certificate opens in a clean PDF view.
+                      </p>
+
+                      {/* Reuse your existing component and data */}
+                      <Certifications certificates={certificationsData} />
+                    </div>
+                  </main>
+                }
+              />
+            </Routes>
           </AnimatePresence>
         </Body>
       </Router>
     </ThemeProvider>
-  );
+   );
 };
 
 export default App;

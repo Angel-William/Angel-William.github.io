@@ -28,49 +28,63 @@ export const Bio: Bio = {
   facebook: "https://www.facebook.com/codegallaxy/",
 };
 // types/certificate.ts
-export interface Certifications {
+export interface Certification {
   id: number;
   title: string;
   issuer: string;
-  date: string;
-  duration: string;
   skills: string[];
   certificateId: string;
   instructor: string;
-  pdfUrl: string;
+  imageUrl: string;
   thumbnailColor: string;
 }
 
 export interface CertificationsProps {
   className?: string;
-  certificates?: Certifications[];
+  certificates?: Certification[];
 }
 // Your certificate data
-const Certifications: Certifications[] = [
+export const certificationsData: Certification[] = [
   {
     id: 1,
     title: "Career Essentials in System Administration",
     issuer: "Microsoft",
-    date: "Nov 30, 2025",
-    duration: "1 hour 19 minutes",
     skills: ["System Administration", "Network Administration", "Network Security"],
-    certificateId: "8d5f6f9e4b8b2f78e4c8da4357b055b131xf36de1294c55e8b54f20cba377d24b",
+    certificateId: "b67e51349c827862c3ed80658d476dc9e1bf998b8a036de33cb4c4b34666a4db",
     instructor: "Shea Hanson, Head of Learning Content Strategy",
-    pdfUrl: "docs/CertificateOfCompletion_Career Essentials in System Administration.pdf",
+    imageUrl: "/Microsoft.jpg",
     thumbnailColor: "from-blue-50 to-indigo-100"
   },
   {
     id: 2,
-    title: "Practical GitHub Project Management and Collaboration",
-    issuer: "LinkedIn Learning",
-    date: "Nov 30, 2025",
-    duration: "1 hour 19 minutes",
-    skills: ["GitHub", "Project Management"],
-    certificateId: "cfb4829407708bf36856d11d6552e1a0f6f4ece18e6c187d6f249a1b0dd43fb6",
+    title: "Career Essentials in GitHub",
+    issuer: "GitHub & LinkedIn Learning",
+    skills: ["GitHub"],
+    certificateId: "59d3218e95a6ae19c869e1cce701e8f18b7e6c9ab9855df699421facb54e8517",
     instructor: "Shea Hanson, Head of Learning Content Strategy",
-    pdfUrl: "/certificates/CertificateOfCompletion_Practical GitHub Project Management and Collaboration (1).pdf",
+    imageUrl: "/GitHub.jpg",
     thumbnailColor: "from-emerald-50 to-teal-100"
   },
+  {
+    id: 3,
+    title: "Build Your Laravel Skills",
+    issuer: "LinkedIn Learning",
+    skills: ["Laravel"],
+    certificateId: "92ba9eebf449b0fe44ee973135df6d3ba1a9ff3c706225c5a101c17311812153",
+    instructor: "Shea Hanson, Head of Learning Content Strategy",
+    imageUrl: "/Laravel.jpg",
+    thumbnailColor: "from-emerald-50 to-teal-100"
+  },
+    {
+    id: 4,
+    title: "Practical GitHub Project Management and Collaboration",
+    issuer: "LinkedIn Learning",
+    skills: ["GitHub", "Project Management"],
+    certificateId: "8e25689c4b80627684a8d43575053b13742b56e1294c55e8b54f2b2eb377d24b",
+    imageUrl: "/githubprojectmanagement.jpg",
+    thumbnailColor: "from-emerald-50 to-teal-100"
+  },
+
   // Add more certificates as needed
 ];
 
