@@ -4,7 +4,6 @@ export interface Bio {
   description: string;
   github: string;
   resume: string;
-  Certifications: string;
   linkedin: string;
   twitter: string;
   insta: string;
@@ -419,10 +418,10 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 9,
-    title: "Trackify",
+    title: "Track",
     date: "Jun 2023 - Jul 2023",
     description:
-      "Trackify is a web application designed to streamline task management and enhance productivity in the workplace. It provides a user-friendly interface for employers to keep track of their employees' daily work activities and empowers employees to log their tasks efficiently. \nAdmin Credentials: # Email: testadmin@gmail.com #Password- 123@testadmin, Employee Credentials:	#Email: testemployee@gmail.com	#Password- 123@Testemployee",
+      "Track is a web application designed to streamline task management and enhance productivity in the workplace. It provides a user-friendly interface for employers to keep track of their employees' daily work activities and empowers employees to log their tasks efficiently. \nAdmin Credentials: # Email: testadmin@gmail.com #Password- 123@testadmin, Employee Credentials:	#Email: testemployee@gmail.com	#Password- 123@Testemployee",
     image:"images/tracks.jpg",
     tags: [
       "Docker",
@@ -444,10 +443,10 @@ export const projects: Project[] = [
  
   {
     id: 1,
-    title: "Vexa",
+    title: "TeamHub",
     date: "Oct 2022 - Present",
     description:
-      "Designed and developed the Vexa project, a project management app that helps users and teams stay organized and on track. Implemented key features such as task tracking, team collaboration, and time tracking to improve productivity and project outcomes and also invite team/project members. The plan is to add a community of users where they can find developers and other team members and chat system implementation.",
+      "Designed and developed the TeamHub project, a project management app that helps users and teams stay organized and on track. Implemented key features such as task tracking, team collaboration, and time tracking to improve productivity and project outcomes and also invite team/project members. The plan is to add a community of users where they can find developers and other team members and chat system implementation.",
     image:
       "images/vexa.gif", tags: [
       "React Js",

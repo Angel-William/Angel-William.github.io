@@ -129,10 +129,6 @@ const Projects: React.FC<Props> = ({ openModal, setOpenModal }) => {
             WEB APP'S
           </ToggleButton>
           <Divider />
-          <ToggleButton $active={toggle === "android app"} onClick={() => setToggle("android app")}>
-            ANDROID APP'S
-          </ToggleButton>
-          <Divider />
           <ToggleButton $active={toggle === "data projects"} onClick={() => setToggle("data projects")}>
             DATA PROJECTS
           </ToggleButton>

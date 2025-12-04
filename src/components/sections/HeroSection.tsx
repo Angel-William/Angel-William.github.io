@@ -18,6 +18,7 @@ import {
 import HeroImg from '/HeroImage.jpg';
 import Typewriter from 'typewriter-effect';
 import { Bio } from '../data/constants';
+import Certifications from './Certification';
 
 const HeroSection: React.FC = () => {
   return (
@@ -50,7 +51,7 @@ const HeroSection: React.FC = () => {
                 Check Resume
               </ResumeButton>
               <ResumeButton
-                href={Bio.Certifications} target="_blank" rel="noopener noreferrer"
+                href={Certifications.Certifications} target="_blank" rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault();
                   const el = document.getElementById('certifications');
