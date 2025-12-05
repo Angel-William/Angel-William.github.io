@@ -55,12 +55,7 @@ const HeroSection: React.FC = () => {
                 Check Resume
               </ResumeButton>
 
-              <ResumeButton
-                href="/certifications"
-                target='_blank'
-              >
-                Check Certifications
-              </ResumeButton>
+           
             </ButtonsRow>
           </HeroLeftContainer>
 

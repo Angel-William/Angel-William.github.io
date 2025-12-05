@@ -1,5 +1,3 @@
-
-// src/App.tsx
 import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme } from './utils/Themes';
@@ -11,17 +9,18 @@ import Skills from './components/sections/Skills';
 import StyledStarsCanvas from './components/canvas/Stars';
 import { AnimatePresence } from 'framer-motion';
 import Projects from './components/sections/Projects';
-import Certifications from './components/sections/Certification';
+// Change this line - use named import instead of default import
+import Certification  from './components/sections/Certification';
 import Contact from './components/sections/Contact';
 import Footer from './components/sections/Footer';
 import Experience from './components/sections/Experience';
-// import CertificationsPage from './components/pages/Certification'; // not needed now
 import Education from './components/sections/Education';
 import ProjectDetails from './components/sections/ProjectDetails';
 import styled from 'styled-components';
+import { OpenModal } from './types';
 
-// ✅ Import the certifications data (adjust the path if your constants live elsewhere)
-import { certificationsData } from './components/data/constants';
+// Optional: Import certifications data if your Certification component needs it
+// import { certifications } from './components/data/constants';
 
 interface Theme {
   bg: string;
@@ -48,21 +47,6 @@ const Wrapper = styled.div`
   width: 100%;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 98%, 0 100%);
 `;
-
-interface Project {
-  id: number;
-  title: string;
-  date: string;
-  description: string;
-  image: string;
-  tags: string[];
-  category: string;
-  github: string;
-  webapp: string;
-  member?: Array<{ img: string }>;
-}
-
-import { OpenModal } from './types';
 
 const App: React.FC = () => {
   const [darkMode] = useState(
@@ -112,6 +96,12 @@ const App: React.FC = () => {
                       setOpenModal={setOpenModal}
                     />
                     <Wrapper key="contact-wrapper">
+                      {/* Pass the props to Certification component */}
+                      <Certification 
+                        key="certification" 
+                        openModal={openModal}
+                        setOpenModal={setOpenModal}
+                      />
                       <Education key="education" />
                       <Contact key="contact" />
                     </Wrapper>
@@ -119,32 +109,12 @@ const App: React.FC = () => {
                   </>
                 }
               />
-
-              {/* Certifications page (opens in a new tab from the hero button) */}
-              <Route
-                path="/certifications"
-                element={
-                  <main className="min-h-screen bg-white">
-                    <div className="mx-auto max-w-6xl px-4 py-10">
-                      <h1 className="text-3xl font-bold tracking-tight mb-6">
-                        Certifications
-                      </h1>
-                      <p className="text-slate-600 mb-8">
-                        Proof of learning and accomplishments—each certificate opens in a clean PDF view.
-                      </p>
-
-                      {/* Reuse your existing component and data */}
-                      <Certifications certificates={certificationsData} />
-                    </div>
-                  </main>
-                }
-              />
             </Routes>
           </AnimatePresence>
         </Body>
       </Router>
     </ThemeProvider>
-   );
+  );
 };
 
 export default App;

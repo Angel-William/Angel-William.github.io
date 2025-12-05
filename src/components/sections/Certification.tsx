@@ -1,279 +1,440 @@
+import React, { useState } from "react";
+import styled from "styled-components";
+import { certificationsData } from "../data/constants";
+import { ExternalLink, Award, Calendar, X } from "lucide-react";
 
-// src/components/Certification.tsx
-import React, { useCallback, useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import type { Certification } from '../data/constants';
-import { X, Calendar, Award } from 'lucide-react';
-
-type Props = {
-  className?: string;
-  certificates?: Certification[];
-  /**
-   * Section anchor id so navbar links like #Education work.
-   * Defaults to "Education" to match your existing navbar.
-   */
-  anchorId?: string;
+// Create a type that matches both your interface and the data
+type CertificationType = {
+  id?: number;
+  title: string;
+  issuer: string;
+  skills?: string[];
+  instructor?: string;
+  date?: string;
+  imageUrl: string;
+  certificateId?: string;
+  credentialUrl?: string;
+  thumbnailColor?: string;
 };
 
-const fadeIn = {
-  hidden: { opacity: 0, y: 12 },
-  show: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.04 * i, duration: 0.5, ease: 'easeOut' }
-  })
-};
+interface Props {
+  openModal: any;
+  setOpenModal: React.Dispatch<React.SetStateAction<any>>;
+}
 
-const Certifications: React.FC<Props> = ({
-  className = '',
-  certificates = [],
-  anchorId = 'Education' // 👈 matches your #Education by default
-}) => {
-  const [selected, setSelected] = useState<Certification | null>(null);
+const Container = styled.div`
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  padding: 0 16px;
+  align-items: center;
+`;
 
-  const open = useCallback((cert: Certification) => setSelected(cert), []);
-  const close = useCallback(() => setSelected(null), []);
+const Wrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1100px;
+  gap: 12px;
+  @media (max-width: 960px) {
+    flex-direction: column;
+  }
+`;
 
-  // Build a usable image URL from relative paths
-  const getFullImageUrl = useCallback((url: string) => {
-    if (!url) return '';
-    if (url.startsWith('http') || url.startsWith('/')) return url;
-    return `/certificates/${url}`;
-  }, []);
+const Title = styled.div`
+  font-size: 52px;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 20px;
+  color: ${({ theme }) => theme.text_primary};
+  @media (max-width: 768px) {
+    margin-top: 12px;
+    font-size: 32px;
+  }
+`;
 
-  // Close lightbox if user navigates via navbar hash links
-  useEffect(() => {
-    const onHashChange = () => close();
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
-  }, [close]);
+const Desc = styled.div`
+  font-size: 18px;
+  text-align: center;
+  font-weight: 600;
+  color: ${({ theme }) => theme.text_secondary};
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+`;
 
-  // Allow closing modal with ESC
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close();
+const CertificationsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  gap: 50px;
+  justify-content: center;
+`;
+
+// Updated to look like Experience section cards - no tilt effect
+const CertificationCard = styled.div`
+  width: 100%;
+  max-width: 500px;
+  background: ${({ theme }) => theme.card};
+  border: 1px solid ${({ theme }) => theme.primary + "20"};
+  box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
+  border-radius: 16px;
+  padding: 24px 36px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  // Subtle hover effect instead of tilt
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: rgba(23, 92, 230, 0.25) 0px 8px 32px;
+    border-color: ${({ theme }) => theme.primary + "40"};
+  }
+
+  @media (max-width: 768px) {
+    max-width: 400px;
+    padding: 20px 30px;
+  }
+
+  @media (max-width: 500px) {
+    max-width: 330px;
+    padding: 16px 24px;
+  }
+`;
+
+// Optional: Add a subtle gradient border like Experience section
+const CardBorder = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    ${({ theme }) => theme.primary + "80"} 0%,
+    ${({ theme }) => theme.secondary + "80"} 100%
+  );
+`;
+
+const CertificationImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid ${({ theme }) => theme.text_primary + "20"};
+`;
+
+const CertificationTitle = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: ${({ theme }) => theme.text_primary};
+  text-align: center;
+`;
+
+const CertificationIssuer = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text_secondary};
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const CertificationDate = styled.div`
+  font-size: 14px;
+  color: ${({ theme }) => theme.text_secondary + "99"};
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const CertificationId = styled.div`
+  font-size: 12px;
+  color: ${({ theme }) => theme.text_secondary + "99"};
+  font-family: monospace;
+  background: ${({ theme }) => theme.text_primary + "10"};
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+`;
+
+const ViewAllButton = styled.button`
+  margin-top: 30px;
+  padding: 12px 24px;
+  background: ${({ theme }) => theme.primary + "10"};
+  border: 1px solid ${({ theme }) => theme.primary + "50"};
+  border-radius: 12px;
+  color: ${({ theme }) => theme.primary};
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.primary + "20"};
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+`;
+
+// Modal styles - fixed with higher z-index and proper positioning
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  // Prevent scrolling when modal is open
+  overflow: hidden;
+`;
+
+const ModalContent = styled.div`
+  background: ${({ theme }) => theme.card};
+  border: 1px solid ${({ theme }) => theme.primary + "20"};
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: rgba(23, 92, 230, 0.25) 0px 20px 60px;
+  z-index: 1001;
+
+  @media (max-width: 768px) {
+    padding: 24px;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: ${({ theme }) => theme.text_primary + "10"};
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: ${({ theme }) => theme.text_primary};
+  transition: all 0.3s ease;
+  z-index: 1002;
+
+  &:hover {
+    background: ${({ theme }) => theme.text_primary + "20"};
+  }
+`;
+
+const ModalImage = styled.img`
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  border: 1px solid ${({ theme }) => theme.text_primary + "10"};
+`;
+
+const ModalTitle = styled.h2`
+  font-size: 32px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.text_primary};
+  margin-bottom: 12px;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
+`;
+
+const ModalDetails = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+`;
+
+const ModalDetailItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: ${({ theme }) => theme.text_secondary};
+  font-size: 16px;
+`;
+
+const CredentialLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: ${({ theme }) => theme.primary + "10"};
+  border: 1px solid ${({ theme }) => theme.primary + "30"};
+  border-radius: 8px;
+  color: ${({ theme }) => theme.primary};
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-top: 16px;
+
+  &:hover {
+    background: ${({ theme }) => theme.primary + "20"};
+    transform: translateY(-2px);
+  }
+`;
+
+const Certification: React.FC<Props> = ({ openModal, setOpenModal }) => {
+  const [showAll, setShowAll] = useState(false);
+  const [selectedCert, setSelectedCert] = useState<CertificationType | null>(null);
+
+  // Use certificationsData from your constants
+  const displayedCerts = showAll ? certificationsData : certificationsData.slice(0, 2);
+
+  const handleCardClick = (cert: CertificationType) => {
+    setSelectedCert(cert);
+  };
+
+  const closeModal = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    setSelectedCert(null);
+  };
+
+  // Prevent body scroll when modal is open
+  React.useEffect(() => {
+    if (selectedCert) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [close]);
-
-  const empty = !certificates || certificates.length === 0;
+  }, [selectedCert]);
 
   return (
-    <section
-      id={anchorId}
-      // scroll-mt-* helps align the target below a sticky navbar.
-      className={`w-full text-white scroll-mt-24 md:scroll-mt-32 ${className}`}
-      aria-label="Certifications"
-    >
-      {/* Header */}
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight">
-            Certifications
-          </h2>
-          <p className="mt-2 text-sm sm:text-base text-white/60">
-            Professional achievements and completed courses
-          </p>
-        </div>
+    <Container id="Certifications">
+      <Wrapper>
+        <Title>Certifications</Title>
+        <Desc style={{ marginBottom: "40px" }}>
+          Professional certifications and courses I've completed to enhance my skills.
+        </Desc>
 
-        {/* Empty state */}
-        {empty && (
-          <div className="rounded-2xl border border-white/10 p-10 text-center">
-            <div className="mx-auto w-10 h-10 mb-3 rounded-full bg-white/5 grid place-items-center">
-              <Award className="w-5 h-5 text-white/70" />
-            </div>
-            <p className="text-white/90 font-medium">No certifications yet</p>
-            <p className="text-white/60 text-sm mt-1">
-              When you add them, they’ll appear here in a clean, simple grid.
-            </p>
-          </div>
+        <CertificationsContainer>
+          {displayedCerts.map((cert: CertificationType, index: number) => (
+            // Removed Tilt component for static look
+            <CertificationCard key={`cert-${cert.id || index}`} onClick={() => handleCardClick(cert)}>
+              <CardBorder />
+              {cert.imageUrl && (
+                <CertificationImage
+                  src={cert.imageUrl}
+                  alt={cert.title}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = "none";
+                  }}
+                />
+              )}
+              <CertificationTitle>{cert.title}</CertificationTitle>
+              <CertificationIssuer>
+                <Award size={16} />
+                {cert.issuer}
+              </CertificationIssuer>
+              <CertificationDate>
+                <Calendar size={14} />
+                {cert.date || "Completed"}
+              </CertificationDate>
+              {cert.certificateId && (
+                <CertificationId>ID: {cert.certificateId}</CertificationId>
+              )}
+            </CertificationCard>
+          ))}
+        </CertificationsContainer>
+
+        {certificationsData.length > 2 && (
+          <ViewAllButton onClick={() => setShowAll(!showAll)}>
+            {showAll ? "Show Less" : `View All (${certificationsData.length})`}
+          </ViewAllButton>
         )}
 
-        {/* Grid */}
-        {!empty && (
-          <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {certificates.map((cert, i) => {
-              const img = getFullImageUrl(cert.imageUrl);
-              return (
-                <motion.article
-                  key={`${cert.title}-${i}`}
-                  className="group outline-none"
-                  custom={i}
-                  variants={fadeIn}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, amount: 0.2 }}
+        {/* Certificate Modal - Only render if selectedCert exists */}
+        {selectedCert && (
+          <ModalOverlay onClick={closeModal}>
+            <ModalContent onClick={(e) => e.stopPropagation()}>
+              <CloseButton onClick={closeModal}>
+                <X size={24} />
+              </CloseButton>
+
+              {selectedCert.imageUrl && (
+                <ModalImage
+                  src={selectedCert.imageUrl}
+                  alt={selectedCert.title}
+                />
+              )}
+
+              <ModalTitle>{selectedCert.title}</ModalTitle>
+
+              <ModalDetails>
+                <ModalDetailItem>
+                  <Award size={18} />
+                  <strong>Issuer:</strong> {selectedCert.issuer}
+                </ModalDetailItem>
+                {selectedCert.instructor && (
+                  <ModalDetailItem>
+                    <strong>Instructor:</strong> {selectedCert.instructor}
+                  </ModalDetailItem>
+                )}
+                {selectedCert.skills && selectedCert.skills.length > 0 && (
+                  <ModalDetailItem>
+                    <strong>Skills:</strong> {selectedCert.skills.join(", ")}
+                  </ModalDetailItem>
+                )}
+                {selectedCert.certificateId && (
+                  <ModalDetailItem>
+                    <strong>Credential ID:</strong> {selectedCert.certificateId}
+                  </ModalDetailItem>
+                )}
+              </ModalDetails>
+
+              {selectedCert.certificateId && (
+                <CredentialLink
+                  href={`https://verify.certifier.io/verify/${selectedCert.certificateId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {/* Image frame */}
-                  <button
-                    type="button"
-                    onClick={() => open(cert)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') open(cert);
-                    }}
-                    className="w-full text-left"
-                    aria-label={`Open ${cert.title} certificate`}
-                  >
-                    <div className="relative rounded-2xl p-[1px] bg-gradient-to-b from-white/30 to-white/5">
-                      <div className="relative rounded-[15px] overflow-hidden bg-black">
-                        {/* Image */}
-                        {img ? (
-                          <img
-                            src={img}
-                            alt={`${cert.title} certificate`}
-                            className="block w-full aspect-[16/11] object-cover will-change-transform transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-                            draggable={false}
-                          />
-                        ) : (
-                          <div className="w-full aspect-[16/11] bg-white/5" />
-                        )}
-
-                        {/* Subtle hover veil */}
-                        <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(120%_120%_at_50%_-20%,rgba(255,255,255,0.08),rgba(255,255,255,0)_50%)]" />
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Text area — white text outside the image */}
-                  <div className="mt-4">
-                    {cert.issuer && (
-                      <div className="text-xs uppercase tracking-[0.14em] text-white/60">
-                        {cert.issuer}
-                      </div>
-                    )}
-
-                    <h3 className="mt-1 text-lg sm:text-xl font-semibold tracking-tight">
-                      {cert.title}
-                    </h3>
-
-                    <div className="mt-2 flex items-center gap-3 text-sm text-white/60">
-                      {cert.date && (
-                        <span className="inline-flex items-center gap-1.5">
-                          <Calendar className="w-4 h-4" />
-                          <span>{cert.date}</span>
-                        </span>
-                      )}
-                      {cert.certificateId && (
-                        <>
-                          <span className="text-white/20">•</span>
-                          <span className="inline-flex items-center gap-1.5">
-                            <Award className="w-4 h-4" />
-                            <span className="truncate">
-                              ID: {String(cert.certificateId).slice(0, 12)}…
-                            </span>
-                          </span>
-                        </>
-                      )}
-                    </div>
-
-                    {/* 🔕 External credential link removed */}
-                  </div>
-                </motion.article>
-              );
-            })}
-          </div>
+                  Verify Credential <ExternalLink size={16} />
+                </CredentialLink>
+              )}
+            </ModalContent>
+          </ModalOverlay>
         )}
-
-        {/* Footer note */}
-        {!empty && (
-          <p className="mt-10 text-center text-xs text-white/40">
-            All certificates are officially verified.
-          </p>
-        )}
-      </div>
-
-      {/* Lightbox modal */}
-      <AnimatePresence>
-        {selected && (
-          <motion.div
-            key="modal"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[80] bg-black/80 backdrop-blur-sm"
-            onClick={close}
-            aria-modal="true"
-            role="dialog"
-          >
-            <div
-              className="absolute inset-0 flex items-center justify-center p-4 sm:p-8"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <motion.div
-                initial={{ y: 12, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 12, opacity: 0 }}
-                className="relative w-full max-w-5xl"
-              >
-                {/* Top bar (no external Open link) */}
-                <div className="absolute -top-12 left-0 right-0 hidden sm:flex items-center justify-between text-white/80">
-                  <div className="min-w-0">
-                    <div className="text-xs uppercase tracking-[0.14em] text-white/60">
-                      {selected.issuer}
-                    </div>
-                    <div className="font-medium truncate">{selected.title}</div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={close}
-                      className="p-2 rounded-lg hover:bg-white/10 transition-colors"
-                      aria-label="Close modal"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Image */}
-                <div className="rounded-2xl p-[1px] bg-gradient-to-b from-white/30 to-white/5">
-                  <div className="rounded-[15px] overflow-hidden bg-black">
-                    {selected.imageUrl ? (
-                      <img
-                        src={getFullImageUrl(selected.imageUrl)}
-                        alt={`${selected.title} certificate`}
-                        className="block w-full max-h-[80vh] object-contain"
-                        draggable={false}
-                      />
-                    ) : (
-                      <div className="w-full aspect-[16/11] bg-white/5" />
-                    )}
-                  </div>
-                </div>
-
-                {/* Details under image */}
-                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/70">
-                  {selected.date && (
-                    <span className="inline-flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4" />
-                      <span>{selected.date}</span>
-                    </span>
-                  )}
-                  {selected.certificateId && (
-                    <>
-                      <span className="text-white/20">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <Award className="w-4 h-4" />
-                        <span>Credential ID: {selected.certificateId}</span>
-                      </span>
-                    </>
-                  )}
-                </div>
-
-                {/* Close button for mobile */}
-                <button
-                  onClick={close}
-                  className="sm:hidden mt-4 w-full py-2 rounded-xl bg-white/10 text-white hover:bg-white/20 transition-colors"
-                >
-                  Close
-                </button>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
+      </Wrapper>
+    </Container>
   );
 };
 
-export default Certifications;
+export default Certification;
