@@ -306,7 +306,7 @@ const CredentialLink = styled.a`
   }
 `;
 
-const Certification: React.FC<Props> = ({ openModal, setOpenModal }) => {
+export default function Certification({ openModal, setOpenModal }: Props) {
   const [showAll, setShowAll] = useState(false);
   const [selectedCert, setSelectedCert] = useState<CertificationType | null>(null);
 
@@ -435,6 +435,4 @@ const Certification: React.FC<Props> = ({ openModal, setOpenModal }) => {
       </Wrapper>
     </Container>
   );
-};
-
-export default Certification;
+}
